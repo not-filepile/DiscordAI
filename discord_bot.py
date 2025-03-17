@@ -55,7 +55,6 @@ class GeminiDiscordBot:
             model_name: str = "models/gemini-2.0-flash-lite",
             embedding_model: str = "models/text-embedding-004",
             system_prompt: str = None,
-            backup_api_keys: list = None,
             cache_dir: str = "embedding_cache",
             max_context_size: int = 5,
             enable_tts: bool = False,
@@ -67,7 +66,6 @@ class GeminiDiscordBot:
         :param model_name: 사용할 Gemini 모델명
         :param embedding_model: 사용할 임베딩 모델명
         :param system_prompt: 시스템 프롬프트 (없으면 기본값 사용)
-        :param backup_api_keys: 대체 API 키 목록
         :param cache_dir: 임베딩 캐시를 저장할 디렉토리
         :param max_context_size: RAG 검색 시 가져올 최대 컨텍스트 수
         :param enable_tts: TTS 기능 활성화 여부
@@ -94,7 +92,6 @@ class GeminiDiscordBot:
             api_key=gemini_api_key,
             model_name=model_name,
             embedding_model=embedding_model,
-            backup_api_keys=backup_api_keys or []
         )
 
         self.ai_service = AIService(
@@ -360,18 +357,14 @@ class GeminiDiscordBot:
 
 
 if __name__ == "__main__":
-    discord_token = os.getenv("DISCORD_TOKEN",
-                              "DISCORD_TOKEN")
-    gemini_api_key = os.getenv("GEMINI_API_KEY", "GEMINI_API_KEY")
-
-    backup_api_keys = ["BACKUP_API_KEY_1", "BACKUP_API_KEY_2"]
+    discord_token = "TOKEN"
+    gemini_api_key = "TOKEN"
 
     gemini_bot = GeminiDiscordBot(
         discord_token=discord_token,
         gemini_api_key=gemini_api_key,
         model_name="models/gemini-2.0-flash-lite",
         embedding_model="models/text-embedding-004",
-        backup_api_keys=backup_api_keys,
         cache_dir="discord_bot_cache",
         max_context_size=5,
         enable_tts=False  # 이거 True해도 맥 아니면 안될수도 있음, FFmpeg 설치해야함
